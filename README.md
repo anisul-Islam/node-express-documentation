@@ -6,6 +6,11 @@
    1. Introduction to the playlist
    2. Introduction to node.js
    3. Local Module
+   4. Built-in module - fs module
+   5. Built-in module - http module
+   6. request, response, status code
+   7. npm crash course
+   8. http routing
 2. Express.js
 
 <br />
@@ -164,3 +169,176 @@
     console.log(`server is running at http://localhost:${PORT}`);
   });
   ```
+
+### [1.6 request, response and status code](https://youtu.be/lHfnjUP-N4E)
+
+- Example
+
+  ```js
+  // index.js file
+  const http = require("http");
+
+  const PORT = 3000;
+
+  const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.write("welcome to the server");
+
+    // if we want to return html as status
+    // res.writeHead(200, { "Content-Type": "text/html" });
+    // res.write("<h1>welcome to the server</h1>");
+
+    res.end();
+  });
+
+  server.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+### [1.7 External modules | npm crash course](https://youtu.be/A8W1p8suw5I)
+
+- first initialize npm with the command `npm init` then follow the instructions
+- we can also use `npm init -y` command for ignoring the installation instructions
+- npm packages : https://www.npmjs.com/
+- Install https://www.npmjs.com/package/random-fruits-name package
+  and follow the instructions
+
+### [1.8 http routing](https://youtu.be/Vlk4UPzi6tc)
+
+- initialize the npm `npm init -y`
+- example is given below:
+
+  ```html
+  // index.html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>home</title>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>welcome to home page</h1>
+      </main>
+    </body>
+  </html>
+  ```
+
+  ```html
+  // about.html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>about</title>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>welcome to about page</h1>
+      </main>
+    </body>
+  </html>
+  ```
+
+  ```html
+  // contact.html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>contact</title>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>welcome to contact page</h1>
+      </main>
+    </body>
+  </html>
+  ```
+
+  ```html
+  // error.html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>error</title>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>page not found 404</h1>
+      </main>
+    </body>
+  </html>
+  ```
+
+  ```js
+  // index.js
+  const http = require("http");
+  const fs = require("fs");
+
+  const PORT = 3000;
+
+  const server = http.createServer((req, res) => {
+    const handleReadFile = (fileName, statusCode) => {
+      fs.readFile(fileName, (err, data) => {
+        res.writeHead(statusCode, { "Content-Type": "text/html" });
+        res.write(data);
+        res.end();
+      });
+    };
+
+    if (req.url === "/") {
+      handleReadFile("index.html", 200);
+    } else if (req.url === "/about") {
+      handleReadFile("about.html", 200);
+    } else if (req.url === "/contact") {
+      handleReadFile("contact.html", 200);
+    } else {
+      handleReadFile("error.html", 404);
+    }
+  });
+
+  server.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+- run the server `node index.js`
