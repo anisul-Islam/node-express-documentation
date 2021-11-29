@@ -612,4 +612,69 @@
   });
   ```
 
-### [2.10 send and receive from data](https://youtu.be/GXkth_xoG64)
+### [2.10 Area Calculator](https://youtu.be/u1BgJg6YzYM)
+
+### [2.11 How to set .env variables](https://youtu.be/dxwUjw2Jyfc)
+
+- Step 1: create an .env file in the root directory
+
+- Step 2: define environment variable(S) using uppercase letters and underscore if more than one word. Example -
+  PORT
+  DATABASE_URL
+
+- Step 3: Assign the values without double quotation and space
+  PORT=3000
+  DATABASE_URL=mongodb+srv://medo:demo1234@cluster0.0tl3q.mongodb.net/test?retryWrites=true&w=majority
+
+- Step 4: you can make a comment using #
+
+  ```
+  # server port
+  PORT=3000
+  ```
+
+- Step 5: install dotenv package - npm install dotenv
+
+- Step 6: require dotenv - require('dotenv').config();
+
+- Step 7: Access the env variables from anywhere using process.env.VARIABLE_NAME. Example – process.env.PORT;
+
+- Optional: DotENV Extension - nice syntax highlighting in your .env files.
+
+### [2.12 Middlewares](https://youtu.be/byiRZfg2JaE)
+
+- what is middleware?
+  - middleware is a function; it contains request obejct, response object and next function
+- why middleware?
+  - execute any code inside middleware
+  - we can make changes to the request and response object
+  - we can end the request and response cycle.
+  - we can call the next middleware in the stack.
+- Types of middleware
+
+  - Application Level middleware: app.use(), app.METHOD(); here METHOD can be get, put, post, delete, patch
+  - router Level middleware: router.use(),router.METHOD()
+  - built-in Level middleware: express.json(), express.urlencoded(), express.static()
+  - third-party Level middleware: body-parser
+  - error handling middleware
+
+    ```js
+    // routes not found error
+    app.use((req, res, next) => {
+      res.status(404).json({
+        message: "resource not found",
+      });
+    });
+
+    // server error
+    app.use((err, req, res, next) => {
+      console.log(err);
+      res.status(500).json({
+        message: "something broke",
+      });
+    });
+    ```
+
+### [2.13 express static Middlewares]()
+
+- `app.use(express.static());` helps us to use static resources such as css and image inside our server
