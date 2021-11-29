@@ -486,3 +486,130 @@
 - res.write()
 - res.end()
 - res.append(key, value); this will set as response header
+
+### [2.6 HTTP Request part-1](https://youtu.be/141Q7XhGGS8)
+
+- request with query parameter - req.query.parameterName
+- request with route parameters - req.params.parameterName
+- request with headers - req.header(key)
+- request with json data / form data inside body - req.body.parameterName
+- example of query parameter
+  - http://localhost:3000?id=101&name=anisul islam
+  - we can get the value using req.query.id and req.query.name
+  ```js
+  router.post("/", (req, res) => {
+    console.log(req.query);
+    console.log(req.query.id);
+    console.log(req.query.name);
+    res.send("I am get method of user route");
+  });
+  ```
+
+### [2.7 HTTP Request part-2](https://youtu.be/141Q7XhGGS8)
+
+- example of routes parameter
+  - http://localhost:3000/101
+  - we can get the value using req.params.id
+  ```js
+  router.post("/:id", (req, res) => {
+    console.log(req.params.id);
+    res.send("I am get method of user route");
+  });
+  ```
+- example of how to get data header requests
+  ```js
+  router.post("/", (req, res) => {
+    console.log(req.header("id"));
+    res.send("I am get method of user route");
+  });
+  ```
+
+### [2.8 HTTP Request part-3](https://youtu.be/141Q7XhGGS8)
+
+- example of request with json data
+
+  - first add `app.use(express.json())`; for form data use `app.use(express.urlencoded({extended: true}))`
+  - then access the data using `req.body.parameterName`
+
+  ```js
+  // sending json or from data when making request
+  {
+    "name" : "anisul"
+  }
+
+  router.post("/", (req, res) => {
+    res.status(201).json({
+      message: "user is created",
+      name: req.body.name,
+    });
+  });
+  ```
+
+### [2.9 send and receive from data](https://youtu.be/GXkth_xoG64)
+
+- create a index.html file inside views folder
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>home</title>
+    </head>
+    <body>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+        </ul>
+      </nav>
+      <main>
+        <h1>welcome to home page</h1>
+        <form action="/users" method="post">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" />
+          <button type="submit">Register</button>
+        </form>
+      </main>
+    </body>
+  </html>
+  ```
+- load a html file
+
+  ```js
+  // Inside user.routes.js file
+  const express = require("express");
+  const path = require("path");
+
+  const router = express.Router();
+
+  router.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/index.html"));
+  });
+
+  router.post("/", (req, res) => {
+    res.status(201).json({
+      message: "user is created",
+      name: req.body.name,
+    });
+  });
+
+  module.exports = router;
+
+  // inside index.js
+  const express = require("express");
+
+  const userRoutes = require("./routes/user.routes");
+
+  const PORT = 3000;
+
+  const app = express();
+
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use("/users", userRoutes);
+
+  app.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+### [2.10 send and receive from data](https://youtu.be/GXkth_xoG64)
