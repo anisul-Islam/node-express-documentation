@@ -12,6 +12,8 @@
    7. npm crash course
    8. http routing
 2. Express.js
+   1. introduction to express.js
+   2. express server
 
 <br />
 
@@ -342,3 +344,145 @@
   ```
 
 - run the server `node index.js`
+
+<br />
+
+## Chapter 2: Express.js
+
+### [2.1 Introduction to express.js](https://youtu.be/1Max9huISzA)
+
+- Express.js is a node.js framework which makes life easier
+- easy to learn and time saving facilitites available because we have ready made stuff in express.js
+- MERN Stack, NERD stack, PERN stack
+
+### [2.2 creating express server](https://youtu.be/t9GVn5j1Hsw)
+
+- first initialize npm : `npm init -y`
+- install express: `npm install express`
+- example
+
+  ```js
+  const express = require("express");
+
+  const PORT = 3000;
+
+  const app = express();
+
+  app.get("/", (req, res) => {
+    res.send("<h1> Welcome to express server </h1>");
+  });
+
+  app.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+### [2.3 http methods and postman](https://youtu.be/AnCkn--EAas)
+
+- HTTP methods - get, post, put, patch, delete ...
+- get methods helps to get a resource or data
+- post method helps to create new resource
+- put method helps to update a resource
+- patch method helps to update single item of a resource
+- delete method helps to delete a resource
+- example
+
+  ```js
+  // index.js
+
+  const express = require("express");
+
+  const PORT = 3000;
+
+  const app = express();
+
+  // http://localhost:3000/user
+
+  app.get("/user", (req, res) => {
+    res.send("<h1> Welcome to get request of express server </h1>");
+  });
+
+  app.post("/user", (req, res) => {
+    res.send("<h1> Welcome to post request of express server </h1>");
+  });
+
+  app.put("/user", (req, res) => {
+    res.send("<h1> Welcome to put request of express server </h1>");
+  });
+
+  app.patch("/user", (req, res) => {
+    res.send("<h1> Welcome to patch request of express server </h1>");
+  });
+
+  app.delete("/user", (req, res) => {
+    res.send("<h1> Welcome to delete request of express server </h1>");
+  });
+
+  app.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+### [2.4 Express Router](https://youtu.be/S7oFcdUiF1k)
+
+- example
+
+  ```js
+  // step1: creates a routes folder
+  // setp2: create a file name as user.routes.js
+  // step3: write the following code inside user.routes.js
+  const express = require("express");
+
+  const router = express.Router();
+
+  // /users
+  router.get("/", (req, res) => {
+    res.send("I am get method of user route");
+  });
+
+  router.post("/", (req, res) => {
+    res.send("I am post method of user route");
+  });
+
+  router.put("/", (req, res) => {
+    res.send("I am put method of user route");
+  });
+
+  router.patch("/", (req, res) => {
+    res.send("I am patch method of user route");
+  });
+
+  router.delete("/", (req, res) => {
+    res.send("I am delete method of user route");
+  });
+
+  module.exports = router;
+
+  //step4: write following code inside index.js
+  const express = require("express");
+
+  const userRoutes = require("./routes/user.routes");
+
+  const PORT = 3000;
+
+  const app = express();
+
+  app.use("/users", userRoutes);
+
+  app.listen(PORT, () => {
+    console.log(`server is running at http://localhost:${PORT}`);
+  });
+  ```
+
+### [2.5 HTTP Response](https://youtu.be/S7oFcdUiF1k)
+
+- response can be text, html, json
+- res.send("some text here");
+- res.status(statuscode).json({...});
+- res.sendFile(fileName);
+- res.cookie(key, value);
+- res.clrarCookie(key);
+- res.writeHead()
+- res.write()
+- res.end()
+- res.append(key, value); this will set as response header
