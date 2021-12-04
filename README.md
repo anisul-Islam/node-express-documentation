@@ -7,13 +7,27 @@
    2. Introduction to node.js
    3. Local Module
    4. Built-in module - fs module
-   5. Built-in module - http module
-   6. request, response, status code
-   7. npm crash course
-   8. http routing
+   5. Built-in module - os and path module
+   6. Built-in module - http module
+   7. request, response, status code
+   8. npm crash course
+   9. http routing
+   10. create node server and deploy on heroku
 2. Express.js
    1. introduction to express.js
    2. express server
+   3. http methods and postman
+   4. Express Router
+   5. HTTP Response
+   6. HTTP Request part-1
+   7. HTTP Request part-2
+   8. HTTP Request part-3
+   9. send and receive from data
+   10. Area Calculator
+   11. How to set .env variables
+   12. Middlewares
+   13. express static Middlewares
+   14. MVC pattern
 
 <br />
 
@@ -153,7 +167,32 @@
   });
   ```
 
-### [1.5 Built-in module - http module](https://youtu.be/PmLJO403hvc)
+### [1.5 Built-in module - os and path module](https://youtu.be/EHo7KNPawhw)
+
+- Example of os and path module
+
+  ```js
+  // os, path
+  const { totalmem, freemem } = require("os");
+  console.log(os.userInfo());
+  console.log(os.homedir());
+  console.log(os.hostname());
+  console.log(totalmem());
+  console.log(freemem());
+
+  console.log(__dirname);
+  console.log(__filename);
+
+  const path = require("path");
+
+  const extensionName = path.extname("index.html");
+  console.log(extensionName);
+
+  const joinName = path.join(__dirname + "/../views");
+  console.log(joinName);
+  ```
+
+### [1.6 Built-in module - http module](https://youtu.be/PmLJO403hvc)
 
 - Example of a node.js http server
 
@@ -172,7 +211,7 @@
   });
   ```
 
-### [1.6 request, response and status code](https://youtu.be/lHfnjUP-N4E)
+### [1.7 request, response and status code](https://youtu.be/lHfnjUP-N4E)
 
 - Example
 
@@ -198,7 +237,7 @@
   });
   ```
 
-### [1.7 External modules | npm crash course](https://youtu.be/A8W1p8suw5I)
+### [1.8 External modules | npm crash course](https://youtu.be/A8W1p8suw5I)
 
 - first initialize npm with the command `npm init` then follow the instructions
 - we can also use `npm init -y` command for ignoring the installation instructions
@@ -206,7 +245,7 @@
 - Install https://www.npmjs.com/package/random-fruits-name package
   and follow the instructions
 
-### [1.8 http routing](https://youtu.be/Vlk4UPzi6tc)
+### [1.9 http routing](https://youtu.be/Vlk4UPzi6tc)
 
 - initialize the npm `npm init -y`
 - example is given below:
@@ -344,6 +383,8 @@
   ```
 
 - run the server `node index.js`
+
+### [1.10 create node server and deploy on heroku](https://youtu.be/2IFDMvfJJHc)
 
 <br />
 
@@ -675,6 +716,6 @@
     });
     ```
 
-### [2.13 express static Middlewares]()
+### [2.13 express static Middlewares](https://youtu.be/lqRIy6d6D48)
 
 - `app.use(express.static());` helps us to use static resources such as css and image inside our server
