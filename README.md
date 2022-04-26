@@ -719,3 +719,157 @@
 ### [2.13 express static Middlewares](https://youtu.be/lqRIy6d6D48)
 
 - `app.use(express.static());` helps us to use static resources such as css and image inside our server
+
+### [2.14 MVC Architecture](https://youtu.be/BDeBB9b2L9I)
+
+- MVC Architecture means Model View Controller Architecture 
+- Model holds all the database related codes
+- View is what users see
+- Controller is the connection point between Model and View. basically It deals with all the logic.
+- example of mvc file structure: setup a project and install necessary packages ( npm init -y && npm install nodemon express body-parser cors)
+   - controllers
+     - user.controller.js
+        ```js
+            const path = require("path");
+            const users = require("../models/user.model");
+
+            const getUser = (req, res) => {
+              res.status(200).json({
+                users,
+              });
+            };
+
+            const createUser = (req, res) => {
+              const user = {
+                username: req.body.username,
+                email: req.body.email,
+              };
+              users.push(user);
+              res.status(201).json(users);
+            };
+
+            module.exports = { getUser, createUser };         
+        ```
+   - models
+      - user.model.js
+           ```js
+               const users = [
+                 {
+                   username: "anisul islam",
+                   email: "lalalal@yahoo.com",
+                 },
+                 {
+                   username: "rakibul islam",
+                   email: "lalalal@yahoo.com",
+                 },
+               ];
+               module.exports = users;         
+           ```
+   - routes
+       - user.route.js
+           ```js
+               const express = require("express");
+               const { getUser, createUser } = require("../controllers/user.controller");
+               const router = express.Router();
+
+               router.get("/", getUser);
+               router.post("/", createUser);
+
+               module.exports = router;
+           ```
+   - views
+      - index.html
+         ```html
+            <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Document</title>
+              </head>
+              <body>
+                <nav>
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/api/users">Register</a></li>
+                  </ul>
+                </nav>
+                <h1>Home Page</h1>
+              </body>
+            </html>
+         ```
+         - user.html
+         ```html
+            <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=], initial-scale=1.0" />
+                <title>Document</title>
+              </head>
+              <body>
+                <nav>
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/api/users">Register</a></li>
+                  </ul>
+                </nav>
+                <h1>User Registration</h1>
+                <form action="/api/user" method="post">
+                  <input type="text" name="username" placeholder="username" />
+                  <input type="email" name="email" placeholder="email" />
+                  <button type="submit">register</button>
+                </form>
+              </body>
+            </html>
+         ```
+   - .env
+      - `PORT=4000`
+   - app.js
+      ```js
+         const express = require("express");
+         const cors = require("cors");
+         const app = express();
+         const bodyParser = require("body-parser");
+         const userRouter = require("./routes/user.route");
+         // CORS
+         app.use(bodyParser.urlencoded({ extended: true }));
+         app.use(bodyParser.json());
+         app.use(cors());
+
+         app.use("/api/users", userRouter);
+
+         app.get("/", (req, res) => {
+           res.sendFile(__dirname + "/views/index.html");
+         });
+
+         // routes not found error
+         app.use((req, res, next) => {
+           res.status(404).json({
+             message: "resource not found",
+           });
+         });
+
+         // server error
+         app.use((err, req, res, next) => {
+           console.log(err);
+           res.status(500).json({
+             message: "something broke",
+           });
+         });
+
+         module.exports = app;
+
+      ```
+   - index.js
+      ```js
+         require("dotenv").config();
+         const app = require("./app");
+         const PORT = process.env.PORT || 5000;
+         app.listen(PORT, () => {
+           console.log(`server is running at http://localhost:${PORT}`);
+         });
+      ```
+
