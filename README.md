@@ -727,7 +727,8 @@
 - View is what users see
 - Controller is the connection point between Model and View. basically It deals with all the logic.
 - example of mvc file structure: setup a project and install necessary packages ( npm init -y && npm install nodemon express body-parser cors)
-   - controllers
+   - <img width="203" alt="Screenshot 2022-04-26 at 05 13 08" src="https://user-images.githubusercontent.com/28184926/165205917-0b83ecc1-9145-40ac-b92f-b8e8cb7511b4.png">
+controllers
      - user.controller.js
         ```js
             const path = require("path");
